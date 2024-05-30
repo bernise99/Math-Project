@@ -1,0 +1,402 @@
+\documentclass[]{article}
+\usepackage{amsmath} 
+\usepackage{graphicx,tikz,cancel,hyperref}
+\usepackage{booktabs,amsmath,array}
+ 
+\title{SIR model with COVID Vaccination}
+\author{Bernise Martinez}
+
+\date{December 7, 2023}
+
+\begin{document} 
+
+\maketitle 
+
+\begin{abstract} 
+The dynamics of an infectious illness are investigated in this research document utilizing a Susceptible-Infectious-Recovered (SIR) model in conjunction with vaccination techniques. The SIR model, a core tool in epidemiology, follows the course of an infectious disease in a community by categorizing people into susceptible, infectious, and recovered compartments. We enhance the conventional SIR model in our work by including vaccination as a control measure.
+
+The outcomes of this study give insight into the possible influence of vaccination on regulating and preventing the spread of infectious illnesses within a community. The incorporation of vaccination into the SIR model provides a helpful framework for policymakers and public health professionals to analyze and execute successful vaccination methods, assisting in the containment and control of epidemics.
+
+Finally, this study adds to our understanding of how vaccination, when integrated into a differential equation-based SIR model, can be a powerful tool in disease control and public health planning, particularly in the context of emerging infectious diseases and vaccination campaign optimization.
+
+\end{abstract}
+
+
+\section*{} Differential equations form a cornerstone in mathematical modeling and the study of dynamic systems, finding broad applications in various scientific disciplines. A detailed definition of differential equations, sourced from mathematical research, might be:
+
+Differential equations are mathematical expressions that describe the quantitative relationship between a function and its derivatives. They capture the dynamic evolution of variables over continuous domains and are fundamental tools for modeling and analyzing diverse phenomena in natural and social sciences. In the context of mathematical research, a differential equation typically takes the form \(F(x, y, y', y'', \ldots) = 0\), where \(y\) is the unknown function of the variable \(x\), and its derivatives with respect to \(x\) (up to a certain order) are involved in the equation. The solutions to these equations provide insight into the behavior and evolution of the modeled system.
+
+Differential equations are classified according to their order, linearity, and function type. First-order differential equations only include the unknown function's first derivative, but higher-order equations involve higher derivatives. Linear differential equations represent linear connections between a function and its derivatives, whereas nonlinear differential equations use products, powers, or other nonlinear combinations. Differential equations have applications in many fields, including physics, biology, economics, engineering, and others.
+Differential equations are used by researchers to describe and predict behaviors, including population dynamics, heat transport, and electrical circuits, offering vital insights into the dynamics of real-world phenomena.
+
+The Susceptible-Infectious-Recovered (SIR) model is a compartmental model widely used in epidemiology to describe the spread of infectious diseases within a population. It divides the population into three compartments: susceptible (S), infectious (I), and recovered (R). The model is based on a set of ordinary differential equations that represent the rates at which individuals move between these compartments. Vaccination is a typical way of preventing the transmission of infectious illnesses since it reduces the number of vulnerable individuals, which naturally reduces the reproduction number. 
+
+\begin{table} [hbt!]
+\begin{center}
+\begin{tabular}{|l|l|} \hline 
+Parameter/Variable& Description\\ \hline \hline
+S& Number of susceptible population\\ \hline 
+V&  Number of Vaccinated individuals\\ \hline
+ I&Number of Infected population\\\hline
+ R&Number of Recovered population\\\hline
+ $\beta$&transmission rate\\\hline
+ $\gamma$&recovery rate\\\hline
+ $\gamma_{\nu}$&vaccination rate \\\hline
+ N& total population\\\hline\end{tabular}
+\caption{1. State variables and model parameters for the SIRV model. \label{Table}}
+\end{center}
+\end{table}
+
+
+To incorporate vaccinations into the SIR model, 
+
+\begin{itemize}
+    \item S = S(t) is the number of susceptible individuals 
+    \item I = I(t) is the number of infected individuals
+    \item R = R(t) is the number of recovered individuals
+    \item V = V(t) is the number of vaccinated individuals
+\end{itemize}
+
+\medskip
+
+If \(N\) is the total population (7,900,000 in example), we define the following fractions:
+
+\[ s(t) = \frac{S(t)}{N} \]
+
+This represents the susceptible fraction of the population, where \(S(t)\) is the number of susceptible individuals.
+
+\[ i(t) = \frac{I(t)}{N} \]
+
+This represents the infected fraction of the population, where \(I(t)\) is the number of infected individuals.
+
+\[ r(t) = \frac{R(t)}{N} \]
+
+This represents the recovered fraction of the population, where \(R(t)\) is the number of recovered individuals.
+
+Additionally, to account for vaccinations, we introduce a new fraction:
+
+\[ v(t) = \frac{V(t)}{N} \]
+
+This represents the vaccinated fraction of the population, where \(V(t)\) is the number of vaccinated individuals.
+
+\medskip
+
+These fractions are convenient for analysis as they provide normalized measures of the prevalence of each group within the total population. They allow us to track changes in the susceptible, infected, recovered, and vaccinated populations relative to the entire community size.
+
+Working with population counts may seem more natural, but using the fractions will simplify several of our computations. We may obtain identical information on the pandemic's progression from any of the two sets of dependent variables since they are proportionate to one another.
+
+ By dividing each equation by \(N\), we may introduce the fractions \(s(t)\), \(i(t)\), \(r(t)\), and \(v(t)\) and describe the following equations in terms of the percent of the entire population:
+
+\[ \frac{ds}{dt} = -\beta \cdot \frac{SI}{N} - \gamma_{\nu} \cdot S \cdot V\]
+
+\[ \frac{di}{dt} = \beta \cdot \frac{SI}{N}  - \gamma \cdot I \]
+
+\[ \frac{dr}{dt} = \gamma \cdot I \]
+
+\[ \frac{dv}{dt} = \gamma_{\nu} \cdot S \cdot V \] 
+\medskip
+
+Now, let's address the questions:
+
+\smallskip
+
+1. Under the assumptions we have made, how do you think s(t) should vary with time? How should r(t) vary with time? How should i(t) vary with time? 
+
+\smallskip
+
+2. Sketch on a piece of paper what you think the graph of each of these functions looks like. 
+
+\smallskip
+
+3. Explain why, at each time t, s(t) + i(t) + r(t) = 1.  
+
+\textbf{Variation with Time:}
+\begin{itemize}
+    \item \textbf{\(s(t)\)}: The susceptible fraction of the population should decrease over time due to new infections (\(\beta \cdot s \cdot i\)) and vaccinations (\(\gamma_v \cdot s \cdot v\)). Initially, \(s(t)\) will experience a rapid decline as the epidemic spreads. As more individuals get infected or vaccinated, \(s(t)\) will stabilize at a lower value.
+    \item \(r(t)\): The recovered fraction (\(r(t)\)) should increase over time due to recoveries (\(\gamma \cdot i\)) and vaccinations (\(\gamma_v \cdot v\)). Initially, \(r(t)\) will be small, but as individuals recover or get vaccinated, \(r(t)\) will rise, indicating immunity in the population.
+    \item \(i(t)\): The infected fraction will vary based on the balance between new infections and recoveries. The infected fraction (\(i(t)\)) will initially rise as the epidemic spreads (\(\beta \cdot s \cdot i\)). However, with recoveries (\(\gamma \cdot i\)) and vaccinations (\(\gamma_v \cdot v\)), \(i(t)\) will eventually decrease. The overall shape of \(i(t)\) depends on the balance between new infections and recoveries/vaccinations.
+\end{itemize}
+
+   \medskip
+
+\textbf{Sketch/Graphical Representation:}
+   - A sketch would show \(s(t)\) decreasing, \(r(t)\) increasing, and \(i(t)\) varying depending on the epidemic dynamics.
+\begin{itemize}
+    \item \textbf{\(s(t)\)}: Expect a decreasing curve that levels off over time.
+    \item \textbf{\(r(t)\):} Anticipate an increasing curve that eventually levels off as the epidemic progresses.
+    \item \textbf{\(i(t)\):} Predict an initially increasing curve that peaks and then decreases due to recoveries and vaccinations.
+\end{itemize}
+
+%%Remember to consider the impact of vaccination on the overall dynamics of the epidemic when sketching the graphs.
+
+\medskip
+
+\textbf{Explanation for \(s(t) + i(t) + r(t) = 1\):}
+   The sum \(s(t) + i(t) + r(t)\) represents the entire population. At any given time \(t\), an individual is either susceptible, infected, or recovered. The total population is constant, so the sum of the fractions of individuals in each category must equal 1. As individuals move from being susceptible (\(s(t)\)) to infected (\(i(t)\)) and eventually to recovered (\(r(t)\)), the sum remains constant at 1, reflecting the entire population at that particular time. The inclusion of vaccination (\(v(t)\)) in the equations ensures that the total population is accounted for, maintaining the balance of the system.
+
+\medskip
+
+\textbf{Assumptions:}
+No one is added to the susceptible group due to the exclusion of births and immigration.
+The time-rate of change of \(S(t)\), the number of susceptibles, depends on the number already susceptible, the number of individuals already infected, and the amount of contact between susceptibles and infecteds.
+Each infected individual generates \(b \cdot s(t)\) new infected individuals per day on average, where \(b\) is a fixed number of contacts.
+A fixed fraction \(k\) of the infected group will recover during any given day.
+
+\medskip
+
+\textbf{Equations:}
+To express the equations below in terms of the fraction of the total population, we can divide each equation by \(N\) and introduce the fractions \(s(t)\), \(i(t)\), \(r(t)\), and \(v(t)\):
+
+\[ \frac{ds}{dt} = -\beta \cdot s \cdot i - \gamma_v \cdot s \cdot v \]
+
+\[ \frac{di}{dt} = \beta \cdot s \cdot i - \gamma \cdot i \]
+
+\[ \frac{dr}{dt} = \gamma \cdot i + \gamma_v \cdot v \]
+
+\[ \frac{dv}{dt} = \delta \cdot (1 - s - i - r) \]
+
+\medskip
+
+The number of susceptible individuals, S(t), evolves based on the rate of new infections and vaccinations:
+
+\[ \frac{dS}{dt} = -\beta \cdot S \cdot I - \gamma_v \cdot S \cdot V \]
+
+Here, \(\beta\) represents the transmission rate, \(I\) is the number of infected individuals, \(\gamma_v\) is the vaccination rate, and \(V\) is the number of vaccinated individuals.
+
+\smallskip
+
+The rate of change of the susceptible fraction \(s(t)\) is influenced by new infections and vaccinations:
+
+\[ \frac{ds}{dt} = -b \cdot s \cdot i - \gamma_v \cdot s \cdot v \]
+
+Here, \(i(t)\) is the infected fraction of the population, \(\gamma_v\) is the vaccination rate, and \(v(t)\) is the vaccinated fraction of the population.
+
+
+
+\bigskip
+
+The number of infected individuals, I(t), changes due to new infections and recoveries:
+
+\[ \frac{dI}{dt} = \beta \cdot S \cdot I - \gamma \cdot I \]
+
+Here, \(\gamma\) is the recovery rate.
+
+\smallskip
+
+The rate of change of the infected fraction \(i(t)\) is determined by new infections and recoveries:
+
+\[ \frac{di}{dt} = b \cdot s \cdot i - k \cdot i \]
+
+Here, \(k\) is the fraction of the infected group that recovers each day.
+
+
+
+\bigskip
+
+The number of recovered individuals, R(t), increases as a result of recoveries:
+
+\[ \frac{dR}{dt} = \gamma \cdot I + \gamma_v \cdot V \]
+
+\smallskip
+
+The rate of change of the recovered fraction \(r(t)\) is influenced by recoveries:
+
+\[ \frac{dr}{dt} = k \cdot i \]
+
+
+
+
+\bigskip
+
+The number of vaccinated individuals, V(t), changes due to the vaccination rate:
+
+\[ \frac{dV}{dt} = \delta \cdot (N - S - I - R) \]
+
+Here, \(\delta\) is the rate of vaccination, and \(N\) is the total population.
+
+\smallskip
+
+The rate of change of the vaccinated fraction \(v(t)\) is determined by the vaccination rate:
+
+\[ \frac{dv}{dt} = \gamma_v \cdot s \cdot v \]
+
+
+
+\bigskip
+
+\textbf{The Susceptible Equation:}
+The Susceptible Equation is given by:
+
+\[ \frac{ds}{dt} = -b \cdot s \cdot i - \gamma_v \cdot s \cdot v \]
+
+Explanation:
+- The presence of the \(I(t)\) term reflects the assumption that the rate of new infections is proportional to the product of the susceptible and infected fractions, \(s(t)\) and \(i(t)\), respectively. This assumption arises from the concept that each infected individual makes \(b\) contacts per day, and a fraction \(s(t)\) of these contacts is with susceptible individuals.
+
+- The negative sign indicates that the susceptible fraction decreases over time due to new infections and vaccinations.
+
+\medskip
+
+\textbf{The Recovered Equation:}
+The Recovered Equation is given by:
+
+\[ \frac{dr}{dt} = k \cdot i \]
+
+Explanation:
+- This equation follows from the assumption that a fixed fraction \(k\) of the infected group recovers each day. The recovered fraction \(r(t)\) increases as a result of recoveries.
+
+\medskip
+
+\textbf{The Infected Equation:}
+The Infected Equation is given by:
+
+\[ \frac{di}{dt} = b \cdot s \cdot i - k \cdot i \]
+
+Explanation:
+- The assumption underlying this equation is that the rate of change of the infected fraction is determined by the balance between new infections (\(b \cdot s \cdot i\)) and recoveries (\(k \cdot i\)).
+
+- This reflects the assumption that a fixed fraction \(k\) of the infected group recovers each day.
+
+\medskip
+
+Now, let's explain the components of the equation for the rate of change of the infected fraction:
+
+\[ \frac{di}{dt} = b \cdot s \cdot i - k \cdot i \]
+
+- \(b \cdot s \cdot i\) represents the rate of new infections, where \(b\) is the fixed number of contacts per day, \(s(t)\) is the susceptible fraction, and \(i(t)\) is the infected fraction.
+
+- \(k \cdot i\) represents the rate of recoveries, where \(k\) is the fraction of the infected group that recovers each day.
+
+
+
+
+The provided information gives the complete SIR model for the COVID-19 pandemic in mid-2020, considering scaled variables and initial conditions. Let's summarize the model and the initial conditions:
+
+Scaled SIR Model:
+\[ \frac{ds}{dt} = -b \cdot s \cdot i - \gamma_v \cdot s \cdot v, \quad s(0) = 1 \]
+
+\[ \frac{di}{dt} = b \cdot s \cdot i - k \cdot i, \quad i(0) = 1.27 \times 10^{-6} \]
+
+\[ \frac{dr}{dt} = k \cdot i, \quad r(0) = 0 \]
+
+
+\textbf{Parameters:}
+\begin{itemize}
+    \item $\beta$ = 0.3
+    \item $\gamma$ = 0.1
+    \item $\gamma_v$ = 0.05
+    \item N = 7,900,000,000
+\end{itemize}
+
+\medskip
+
+\textbf{Initial Conditions:} (starting with 100 infected individuals)
+\begin{itemize}
+    \item s = 7,899,999,900
+    \item i = 100
+    \item r = 0
+    \item v = 0
+\end{itemize}
+
+\medskip
+
+\textbf{Time Settings:}
+T (total time in days) = 365
+
+\smallskip
+
+dt (time step in days) = 1
+
+
+
+
+\[ s_n = s_{n-1} + s\text{-slope}_{n-1} \Delta_t, \]
+
+\[ i_n = i_{n-1} + i\text{-slope}_{n-1} \Delta_t, \]
+
+\[ r_n = r_{n-1} + r\text{-slope}_{n-1} \Delta_t, \]
+
+\[ v_n = v_{n-1} + v\text{-slope}_{n-1} \Delta_t, \]
+
+More specifically, given the SIR model with vaccinations:
+
+\[ \frac{ds}{dt} = -\beta s i - \gamma_v s v, \quad s(0) = 1 \]
+
+\[ \frac{di}{dt} = \beta s i - \gamma i, \quad i(0) = 1.27 \times 10^{-6} \]
+
+\[ \frac{dr}{dt} = \gamma i, \quad r(0) = 0 \]
+
+\[ \frac{dv}{dt} = \delta(1 - s - i - r), \quad v(0) = 0 \]
+
+
+
+\begin{center}
+\includegraphics[width=0.95\textwidth]{code.py.pdf}
+\end{center}
+
+
+
+\begin{center}
+\includegraphics[width=0.95\textwidth]{Figure_3.png}
+\end{center}
+
+Solving the given system of differential equations for the SIRV model involves integrating the equations to obtain the functions \(s(t)\), \(i(t)\), \(r(t)\), and \(v(t)\) over time. 
+
+One commonly used numerical method is Euler's method. Here's a simplified Python code snippet using Euler's method to approximate the solutions:
+To create a graph for the given system of differential equations, we need initial conditions and specific parameter values. 
+
+The Euler formulas for each of these equations become:
+
+\[ s_n = s_{n-1} + \left(-\beta s i - \gamma_v s v\right)\text{-slope}_{n-1} \Delta_t, \]
+
+\[ i_n = i_{n-1} + \left(\beta s i - \gamma i\right)\text{-slope}_{n-1} \Delta_t, \]
+
+\[ r_n = r_{n-1} + \left(\gamma i\right)\text{-slope}_{n-1} \Delta_t, \]
+
+\[ v_n = v_{n-1} + \left(\delta(1 - s - i - r)\right)\text{-slope}_{n-1} \Delta_t. \]
+
+\begin{center}
+\includegraphics[width=1.0\textwidth]{graph.py.pdf}
+\end{center}
+
+
+  
+
+\begin{center}
+\includegraphics[width=0.95\textwidth]{Figure_1.png}
+\end{center}
+
+
+
+
+\section*{Conclusion}
+\begin{itemize}
+\item  The model allows us to understand how the introduction of a vaccination program affects the dynamics of the disease.
+\item The SIRV model helps in assessing the effectiveness of vaccination as a control measure against the spread of COVID-19. 
+\item The SIRV model can be employed to project the long-term trends of the epidemic, considering the interplay between natural immunity, waning immunity, and the ongoing vaccination efforts.
+\end{itemize}
+
+\bibliography{mybibliographyfile}
+\bibliographystyle{plain}
+
+\footnotesize{
+\begin{thebibliography}{99}
+
+\bibitem{p1} Turkyilmazoglu, Mustafa (2021)
+\newblock  The compartmental SIRVI model
+\newblock \emph{An extended epidemic model with vaccination:
+Weak-immune SIRVI}
+
+\bibitem{p1}  Smith, David and Moore, Lang (2004)
+\newblock The Differential Equation Model
+\newblock \emph{The SIR Model for Spread of Disease}
+
+\bibitem{p1}  (2023)
+\newblock Population Reference Bureau
+\newblock \emph{World Population Data Sheet } 
+
+\end{thebibliography}
+}
+School of Mathematical and Statistical Sciences, The University of Texas Rio Grande Valley, Edinburg, Texas 78539, USA
+
+Email address: bernise.martinez01@utrgv.edu
+\end{document}
