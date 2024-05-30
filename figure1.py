@@ -1,15 +1,17 @@
 import matplotlib.pyplot as plt
 
-# Define parameters and initial conditions
-beta = 0.1
-gamma = 0.05
-gamma_v = 0.02
-N = 1000  # Total population
-s, i, r, v = 900, 100, 0, 0  # Initial conditions
+# Define parameters
+beta = 0.3
+gamma = 0.1
+gamma_v = 0.05
+N = 7_900_000_000  # Total population
+
+# Initial conditions
+s, i, r, v = 7_899_999_900, 100, 0, 0  # Starting with 100 infected individuals
 
 # Time settings
-T = 100  # Total time
-dt = 0.1  # Time step
+T = 365  # Total time in days
+dt = 1  # Time step in days
 
 # Lists to store results
 s_values, i_values, r_values, v_values, time_values = [], [], [], [], []
@@ -37,7 +39,7 @@ plt.plot(time_values, s_values, label='Susceptible')
 plt.plot(time_values, i_values, label='Infected')
 plt.plot(time_values, r_values, label='Recovered')
 plt.plot(time_values, v_values, label='Vaccinated')
-plt.xlabel('Time')
+plt.xlabel('Time (days)')
 plt.ylabel('Population')
 plt.legend()
 plt.show()
