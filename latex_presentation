@@ -1,0 +1,223 @@
+\documentclass{beamer}
+
+\mode<presentation> {
+
+\usetheme{Warsaw}
+
+\usecolortheme{orchid}
+}
+
+\usepackage{graphicx,tikz,cancel,hyperref}
+\usepackage{booktabs,amsmath,array}
+\let\olditem\item
+\renewcommand{\item}{\setlength{\itemsep}{\fill}\olditem}
+
+\title[SIRV Model]{SIR model with COVID-19 Vaccination}
+\author[ B. Martinez, Z. Feng ]{ Bernise Martinez \texorpdfstring{ \\
+Faculty Advisor: Dr. Zhaosheng Feng}{}} 
+
+\institute[UTRGV]
+{University of Texas Rio Grande Valley \\
+\textit{bernise.martinez01@utrgv.edu}}
+
+\date{December 7, 2023}
+
+
+\begin{document}  % this is where the presentation starts!
+
+\begin{frame}  % Start of a page
+\titlepage   
+\end{frame}   % End of a page
+
+
+\begin{frame} 
+\frametitle{Introduction}
+In 2021, the COVID-19 pandemic continued to shape global health, society, and research efforts. The SIRV (Susceptible-Infectious-Recovered-Vaccinated) model became a crucial tool for understanding and predicting the dynamics of the virus's spread. This year marked a significant phase in the pandemic response, characterized by widespread vaccination campaigns and evolving viral variants.
+
+\end{frame}
+
+\begin{frame} 
+\frametitle{Introduction}
+Differential equations mathematically express how a function and its derivatives quantitatively relate to each other. They are crucial for modeling and analyzing the dynamic evolution of variables across continuous domains in various scientific disciplines.
+
+\medskip
+
+The Susceptible-Infectious-Recovered-Vaccinated (SIRV) model is a compartmental model widely used in epidemiology to comprehensively capture the dynamics of infectious disease spread within a population.
+
+
+\end{frame} 
+
+
+\begin{frame} 
+\frametitle{A description of the main result}
+The independent variable is time t, measured in days, and we analyze two linked sets of dependent variables as the initial stage in the modeling procedure.
+To incorporate vaccinations into the SIR model, 
+
+\begin{itemize}
+    \item S = S(t) is the number of susceptible individuals 
+    \item I = I(t) is the number of infected individuals
+    \item R = R(t) is the number of recovered individuals
+    \item V = V(t) is the number of vaccinated individuals
+\end{itemize}
+\end{frame}   
+ 
+
+\begin{frame} 
+\frametitle{A description of the main result}
+If \(N\) is the total population (approximately 7,900,000,000 globally in 2021), we define the following fractions:
+
+    \[ s(t) = \frac{S(t)}{N} \]
+    \[ i(t) = \frac{I(t)}{N} \]
+    \[ r(t) = \frac{R(t)}{N} \]
+    \[ v(t) = \frac{V(t)}{N} \]
+
+\end{frame} 
+
+\begin{frame} 
+\frametitle{A description of the main result}
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|l|} \hline 
+Parameter/Variable& Description\\ \hline \hline
+S& Number of susceptible population\\ \hline 
+V&  Number of Vaccinated individuals\\ \hline
+ I&Number of Infected population\\\hline
+ R&Number of Recovered population\\\hline
+ $\beta$&transmission rate\\\hline
+ $\gamma$&recovery rate\\\hline
+ $\gamma_{\nu}$&vaccination rate \\\hline
+ N& total population\\\hline\end{tabular}
+\caption{1. State variables and model parameters for the SIRV model. \label{Table}}
+
+\end{center}
+\end{table} 
+\end{frame} 
+
+\begin{frame} 
+\frametitle{Model Equations}
+    By dividing each equation by \(N\), we may introduce the fractions \(s(t)\), \(i(t)\), \(r(t)\), and \(v(t)\) and describe the following equations in terms of the percent of the entire population:
+
+\[ \frac{ds}{dt} = -\beta \cdot \frac{SI}{N} - \gamma_{\nu} \cdot S \cdot V\]
+
+\[ \frac{di}{dt} = \beta \cdot \frac{SI}{N}  - \gamma \cdot I \]
+
+\[ \frac{dr}{dt} = \gamma \cdot I \]
+
+\[ \frac{dv}{dt} = \gamma_{\nu} \cdot S \cdot V \]
+\end{frame} 
+
+\begin{frame}
+\textbf{Parameters:}
+\begin{itemize}
+    \item $\beta$ = 0.3
+    \item $\gamma$ = 0.1
+    \item $\gamma_v$ = 0.05
+    \item N = 7,900,000,000
+\end{itemize}
+
+\medskip
+
+\textbf{Initial Conditions:} (starting with 100 infected individuals)
+\begin{itemize}
+    \item s = 7,899,999,900
+    \item i = 100
+    \item r = 0
+    \item v = 0
+\end{itemize}
+
+\medskip
+
+\textbf{Time Settings:}
+T (total time in days) = 365
+
+\smallskip
+
+dt (time step in days) = 1
+\end{frame}
+
+\begin{frame}
+\frametitle{Differential Equation}
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.95\textwidth]{code.py.pdf}
+\end{center}
+\end{figure}
+\end{frame}
+
+\begin{frame} 
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.95\textwidth]{Figure_3.png}
+\end{center}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Euler's Method}  
+Solving the given system of differential equations for the SIRV model involves integrating the equations to obtain the functions \(s(t)\), \(i(t)\), \(r(t)\), and \(v(t)\) over time. 
+
+One commonly used numerical method is Euler's method. Here's a simplified Python code snippet using Euler's method to approximate the solutions:
+To create a graph for the given system of differential equations, we need initial conditions and specific parameter values. 
+     \[s_{n+1} = s_n + \left(-\beta \cdot \frac{si}{N} - \gamma_{\nu} \cdot s \cdot v\right) \cdot \Delta t\]
+     \[i_{n+1} = i_n + \left(\beta \cdot \frac{si}{N} - \gamma \cdot i\right) \cdot \Delta t\]
+     \[r_{n+1} = r_n + \left(\gamma \cdot i\right) \cdot \Delta t\]
+     \[v_{n+1} = v_n + \left(\gamma_{\nu} \cdot s \cdot v\right) \cdot \Delta t\]
+
+\end{frame}
+
+\begin{frame}
+\begin{figure}
+\begin{center}
+\includegraphics[width=1.0\textwidth]{graph.py.pdf}
+\end{center}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}  
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.95\textwidth]{Figure_1.png}
+\end{center}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Conclusion and Future Work}
+\begin{itemize}
+\item  The model allows us to understand how the introduction of a vaccination program affects the dynamics of the disease.
+\item The SIRV model helps in assessing the effectiveness of vaccination as a control measure against the spread of COVID-19. 
+\item The SIRV model can be employed to project the long-term trends of the epidemic, considering the interplay between natural immunity, waning immunity, and the ongoing vaccination efforts.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{References}
+\footnotesize{
+\begin{thebibliography}{99}
+
+\bibitem[Orig]{p1} Turkyilmazoglu, Mustafa (2021)
+\newblock  The compartmental SIRVI model
+\newblock \emph{An extended epidemic model with vaccination:
+Weak-immune SIRVI
+}.
+
+\bibitem[Orig]{p1}  Smith, David and Moore, Lang (2004)
+\newblock The Differential Equation Model
+\newblock \emph{The SIR Model for Spread of Disease}
+
+\bibitem[Orig]{p1}  (2023)
+\newblock Population Reference Bureau
+\newblock \emph{World Population Data Sheet } 
+
+\end{thebibliography}
+}
+\end{frame}
+
+\begin{frame}
+\Huge{\centerline{The End}}
+\end{frame}
+
+\end{document}
